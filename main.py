@@ -1,3 +1,4 @@
+from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
@@ -15,10 +16,15 @@ def get_coffee_prices():
     for _, product in enumerate(products, start=1):
         product_name = product.find('h3', class_='sh-np__product-title translate-content').text.strip()
         product_price = product.find('span', class_='T14wmb').text.strip()
+        product_store = product.find('span', class_= 'E5ocAb').text.strip()
         product_price = product_price.split("R$")
+        price_date = datetime.now().strftime("%d/%m/%Y")
         print(f"Produto: {product_name}")
         print(f"Preço: {product_price[1].replace(r"\xa", "")}")
+        print(f"Loja: {product_store}")
+        print(f"Dia: {price_date}")
         print("-" * 50)
+
 
 if __name__ == "__main__":
     get_coffee_prices()
